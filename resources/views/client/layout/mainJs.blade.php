@@ -1,0 +1,13 @@
+ <!-- JS here -->
+ <script src="{{ asset('theme/client/assets/js/jquery-3.6.0.min.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/waypoints.min.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/bootstrap.bundle.min.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/meanmenu.min.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/swiper.min.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/slick.min.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/magnific-popup.min.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/counterup.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/wow.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/ajax-form.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/beforeafter.jquery-1.0.0.min.js') }}"></script>
+ <script src="{{ asset('theme/client/assets/js/main.js') }}"></script>
