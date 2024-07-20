@@ -1,14 +1,14 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Thêm mới Sản phẩm
+    Cập nhật Sản phẩm: {{ $product->name }}
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Thêm mới sản phẩm</h4>
+                <h4 class="mb-sm-0">Cập nhật Sản phẩm: {{ $product->name }}</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -21,26 +21,35 @@
         </div>
     </div>
 
-    @if ($errors->any())
+    @if ($errors->any() || session('error'))
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
-                        <div class="alert alert-danger" style="width: 100%;">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger" style="width: 100%;">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        @if(session('error'))
+                            <div class="alert alert-danger" style="width: 100%;">
+                                {{ session('error')  }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     @endif
-    
-    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+
+    <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
 
         <div class="row">
             <div class="col-lg-12">
@@ -54,34 +63,41 @@
                                 <div class="col-md-4">
                                     <div>
                                         <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" name="name" id="name">
+                                        <input type="text" class="form-control" name="name" id="name"
+                                               value="{{ $product->name }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="sku" class="form-label">SKU</label>
                                         <input type="text" class="form-control" name="sku" id="sku"
-                                               value="{{ strtoupper(\Str::random(8)) }}">
+                                               value="{{ $product->sku }}">
                                     </div>
                                     <div class="mt-3">
                                         <label for="price_regular" class="form-label">Price Regular</label>
-                                        <input type="number" value="0" class="form-control" name="price_regular"
+                                        <input type="number" value="{{ $product->price_regular }}" class="form-control"
+                                               name="price_regular"
                                                id="price_regular">
                                     </div>
                                     <div class="mt-3">
                                         <label for="price_sale" class="form-label">Price Sale</label>
-                                        <input type="number" value="0" class="form-control" name="price_sale"
+                                        <input type="number" value="{{ $product->price_sale }}" class="form-control"
+                                               name="price_sale"
                                                id="price_sale">
                                     </div>
                                     <div class="mt-3">
                                         <label for="catalogue_id" class="form-label">Catalogues</label>
                                         <select type="text" class="form-select" name="catalogue_id" id="catalogue_id">
                                             @foreach($catalogues as $id => $name)
-                                                <option value="{{ $id }}">{{ $name }}</option>
+                                                <option
+                                                    @selected($product->catalogue_id == $id) value="{{ $id }}">{{ $name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="mt-3">
                                         <label for="img_thumbnail" class="form-label">Img Thumbnail</label>
                                         <input type="file" class="form-control" name="img_thumbnail" id="img_thumbnail">
+                                        @if($product->img_thumbnail)
+                                            <img src="{{ \Storage::url($product->img_thumbnail) }}" width="100px">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -101,7 +117,8 @@
                                             <div class="col-md-2">
                                                 <div class="form-check form-switch form-switch-{{ $color }}">
                                                     <input class="form-check-input" type="checkbox" role="switch"
-                                                           name="{{ $key }}" value="1" id="{{ $key }}" @if($key == 'is_active') checked @endif>
+                                                           name="{{ $key }}" value="1" id="{{ $key }}"
+                                                        @checked($product->$key)>
                                                     <label class="form-check-label"
                                                            for="{{ $key }}">{{ \Str::convertCase($key, MB_CASE_TITLE) }}</label>
                                                 </div>
@@ -113,21 +130,22 @@
                                         <div class="mt-3">
                                             <label for="description" class="form-label">Description</label>
                                             <textarea class="form-control" name="description" id="description"
-                                                      rows="2"></textarea>
+                                                      rows="2">{{ $product->description }}</textarea>
                                         </div>
                                         <div class="mt-3">
                                             <label for="material" class="form-label">Material</label>
                                             <textarea class="form-control" name="material" id="material"
-                                                      rows="2"></textarea>
+                                                      rows="2">{{ $product->material }}</textarea>
                                         </div>
                                         <div class="mt-3">
                                             <label for="user_manual" class="form-label">User Manual</label>
                                             <textarea class="form-control" name="user_manual" id="user_manual"
-                                                      rows="2"></textarea>
+                                                      rows="2">{{ $product->user_manual }}</textarea>
                                         </div>
                                         <div class="mt-3">
                                             <label for="content" class="form-label">Content</label>
-                                            <textarea class="form-control" name="content" id="content"></textarea>
+                                            <textarea class="form-control" name="content"
+                                                      id="content">{!! $product->content !!}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +175,19 @@
                                             <th>Color</th>
                                             <th>Quantity</th>
                                             <th>Image</th>
+                                            <th></th>
                                         </tr>
+
+                                        @php
+                                            $variants = [];
+                                            $product->variants->map(function ($item) use (&$variants) {
+                                                $key = $item->product_size_id . '-' . $item->product_color_id;
+                                                $variants[$key] = [
+                                                    'quatity' => $item->quatity,
+                                                    'image' => $item->image,
+                                                ];
+                                            });
+                                        @endphp
 
                                         @foreach($sizes as $sizeID => $sizeName)
                                             @php($flagRowspan = true)
@@ -169,7 +199,9 @@
                                                         <td style="vertical-align: middle;"
                                                             rowspan="{{ count($colors) }}"><b>{{ $sizeName }}</b></td>
                                                     @endif
+
                                                     @php($flagRowspan = false)
+                                                    @php($key = $sizeID . '-' . $colorID)
 
                                                     <td>
                                                         <div
@@ -177,12 +209,21 @@
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control"
-                                                               value="0"
-                                                               name="product_variants[{{ $sizeID . '-' . $colorID }}][quatity]">
+                                                               value="{{ $variants[$key]['quatity'] }}"
+                                                               name="product_variants[{{ $key }}][quatity]">
                                                     </td>
                                                     <td>
                                                         <input type="file" class="form-control"
-                                                               name="product_variants[{{ $sizeID . '-' . $colorID }}][image]">
+                                                               name="product_variants[{{ $key }}][image]">
+                                                        <input type="hidden" class="form-control"
+                                                               value="{{ $variants[$key]['image'] }}"
+                                                               name="product_variants[{{ $key }}][current_image]">
+                                                    </td>
+                                                    <td>
+                                                        @if($variants[$key]['image'])
+                                                            <img src="{{ \Storage::url($variants[$key]['image']) }}"
+                                                                 width="100px">
+                                                        @endif
                                                     </td>
                                                 </tr>
 
@@ -209,14 +250,34 @@
                     <div class="card-body">
                         <div class="live-preview">
                             <div class="row gy-4" id="gallery_list">
-                                <div class="col-md-4" id="gallery_default_item">
-                                    <label for="gallery_default" class="form-label">Image</label>
-                                    <div class="d-flex">
-                                        <input type="file" class="form-control" name="product_galleries[]"
-                                               id="gallery_default">
+                                @if(count($product->galleries) > 0)
+                                    @foreach($product->galleries as $item)
+                                        <div class="col-md-4" id="storage_{{ $item->id }}_item">
+                                            <label for="gallery_default" class="form-label">Image</label>
+                                            <div class="d-flex">
+                                                <input type="file" class="form-control" name="product_galleries[]"
+                                                       id="gallery_default">
+                                                <img src="{{ \Storage::url($item->image) }}" width="100px" alt="">
+                                                <button type="button" class="btn btn-danger"
+                                                        onclick="removeImageGallery('storage_{{ $item->id }}_item', '{{ $item->id }}', '{{ $item->image }}')">
+                                                    <span class="bx bx-trash"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="col-md-4" id="gallery_default_item">
+                                        <label for="gallery_default" class="form-label">Image</label>
+                                        <div class="d-flex">
+                                            <input type="file" class="form-control" name="product_galleries[]"
+                                                   id="gallery_default">
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
+
+                            {{--Thằng này dùng để lưu ảnh xóa--}}
+                            <div id="delete_galleries"></div>
                         </div>
 
                     </div>
@@ -238,8 +299,10 @@
                                     <div>
                                         <label for="tags" class="form-label">Tags</label>
                                         <select class="form-select" name="tags[]" id="tags" multiple>
+                                            @php($productTags = $product->tags->pluck('id')->all())
                                             @foreach($tags as $id => $name)
-                                                <option value="{{ $id }}">{{ $name }}</option>
+                                                <option
+                                                    @selected(in_array($id, $productTags)) value="{{ $id }}">{{ $name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -291,9 +354,12 @@
             $('#gallery_list').append(html);
         }
 
-        function removeImageGallery(id) {
+        function removeImageGallery(id, galleryID, imagePath) {
             if (confirm('Chắc chắn xóa không?')) {
                 $('#' + id).remove();
+
+                let html = `<input type="hidden" class="form-control" name="delete_galleries[${galleryID}]" value="${imagePath}">`;
+                $('#delete_galleries').append(html);
             }
         }
     </script>

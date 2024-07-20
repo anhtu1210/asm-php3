@@ -85,15 +85,8 @@
                                                <li>
                                                    <a href="about.html">About</a>
                                                </li>
-                                               <li class="has-dropdown">
-                                                   <a href="product.html">Shop</a>
-                                                   <ul class="submenu">
-                                                       <li><a href="product.html">Product</a></li>
-                                                       <li><a href="product-details.html">Product Details</a></li>
-                                                       <li><a href="wishlist.html">Wishlist</a></li>
-                                                       <li><a href="cart.html">Cart</a></li>
-                                                       <li><a href="checkout.html">Checkout</a></li>
-                                                   </ul>
+                                               <li>
+                                                   <a href="{{ route('product.index') }}">Shop</a>
                                                </li>
                                                <li class="has-dropdown">
                                                    <a href="about.html">Pages</a>

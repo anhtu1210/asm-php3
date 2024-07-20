@@ -24,6 +24,7 @@
    <link rel="stylesheet" href="{{ asset('theme/client/assets/css/spacing.css') }}">
    <link rel="stylesheet" href="{{ asset('theme/client/assets/css/main.css') }}">
 
+   @yield('link')
 </head>
 
 <body>

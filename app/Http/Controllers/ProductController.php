@@ -10,7 +10,10 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
-
+    public function index(){
+        $data = Product::query()->latest('id')->paginate(12);
+        return view('client.shop.shopProduct', compact('data'));
+    }
 
     public function detail($slug)
     {

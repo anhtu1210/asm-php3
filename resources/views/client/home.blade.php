@@ -310,7 +310,7 @@
                                                             $url = \Illuminate\Support\Facades\Storage::url($url);
                                                         }
                                                     @endphp
-                                                    <a href="{{route('product.detail',$product->slug)}}">
+                                                    <a href="{{ route('product.detail', $product->slug) }}">
                                                         <img src="{{ $url }}" alt="">
                                                     </a>
                                                     <div class="product-action-item">
@@ -350,7 +350,8 @@
                                                 {{-- content product --}}
                                                 <div class="product-content">
                                                     <h4 class="product-title"><a
-                                                            href="{{route('product.detail',$product->slug)}}">{{ $product->name }}</a></h4>
+                                                            href="{{ route('product.detail', $product->slug) }}">{{ $product->name }}</a>
+                                                    </h4>
                                                     <div class="user-rating">
                                                         {{-- sao danh gia --}}
                                                         <li class="py-1"><svg width="116" height="16"
@@ -406,7 +407,8 @@
                                                         </li>
                                                     </div>
                                                     <div class="product-price">
-                                                        <span class="product-new-price">{{$product->price_regular}}</span>
+                                                        <span class="product-old-price"><del>{{$product->price_regular}}</del></span>
+                                                        <span class="product-new-price">{{$product->price_sale}}VND</span>
                                                     </div>
                                                 </div>
                                             </div>
