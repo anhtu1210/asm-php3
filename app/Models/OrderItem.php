@@ -21,4 +21,5 @@ class OrderItem extends Model
         'variant_size_name',
         'variant_color_name',
     ];
+    
 }

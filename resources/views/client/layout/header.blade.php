@@ -154,7 +154,7 @@
                                                    stroke="black" stroke-width="2" stroke-linecap="round"
                                                    stroke-linejoin="round" />
                                            </svg>
-                                           <span class="header-action-badge bg-furniture">12</span>
+                                           <span class="header-action-badge bg-furniture">{{ count((array) session('cart')) }}</span>
                                        </a>
                                    </div>
                                </div>
