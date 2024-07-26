@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Models\ProductColor;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // home
+Auth::routes();
 Route::get('/', [HomeController::class, 'showHome'])->name('home');
 
 // cart
@@ -34,3 +36,6 @@ Route::post('order-save', [OrderController::class, 'save'])->name('order.save');
 // product
 Route::get('product/shop', [ProductController::class, 'index'])->name('product.index');
 Route::get('product/{slug}/detail', [ProductController::class, 'detail'])->name('product.detail');
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

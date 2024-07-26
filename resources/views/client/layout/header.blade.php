@@ -12,7 +12,7 @@
                            <p>TAKE CARE OF YOUR Health <span class="text-white">25% OFF</span> USE CODE “ DOFIX03 ”</p>
                        </div>
                        <div class="tp-header-top-menu d-flex align-items-center justify-content-end">
-                           <div class="header-lang-item header-lang">
+                           {{-- <div class="header-lang-item header-lang">
                                <span class="header-lang-toggle text-white" id="header-lang-toggle">English</span>
                                <ul class="">
                                    <li>
@@ -42,22 +42,17 @@
                                        <a class="furniture-clr-hover" href="#">KWD</a>
                                    </li>
                                </ul>
-                           </div>
-                           <div class="header-lang-item tp-header-setting">
-                               <span class="header-setting-toggle text-white" id="header-setting-toggle">Setting</span>
-                               <ul>
-                                   <li>
-                                       <a class="furniture-clr-hover" href="#">My Profile</a>
-                                   </li>
-                                   <li>
-                                       <a class="furniture-clr-hover" href="wishlist.html">Wishlist</a>
-                                   </li>
-                                   <li>
-                                       <a class="furniture-clr-hover" href="cart.html">Cart</a>
-                                   </li>
-                                   <li>
-                                       <a class="furniture-clr-hover" href="#">Logout</a>
-                                   </li>
+                           </div> --}}
+                           <div class="header-action-item">
+                               <ul class="navbar-nav ms-auto ">
+                                   <!-- Authentication Links -->
+                                   @guest
+                                       @if (Route::has('register'))
+                                           <li class="nav-item">
+                                               <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                           </li>
+                                       @endif
+                                   @endguest
                                </ul>
                            </div>
                        </div>
@@ -117,6 +112,7 @@
                                </div>
                            </div>
                            <div class="header-right d-inline-flex align-items-center justify-content-end">
+                               {{-- search --}}
                                <div class="header-search d-none d-xxl-block">
                                    <form action="#">
                                        <input type="text" placeholder="Search...">
@@ -132,7 +128,9 @@
                                        </button>
                                    </form>
                                </div>
+                               {{-- end search --}}
                                <div class="header-action d-flex align-items-center ml-30">
+                                   {{-- wishlist --}}
                                    <div class="header-action-item">
                                        <a href="wishlist.html" class="header-action-btn">
                                            <svg width="23" height="21" viewBox="0 0 23 21" fill="none"
@@ -144,9 +142,10 @@
                                            <span class="header-action-badge bg-furniture">3</span>
                                        </a>
                                    </div>
+                                   {{-- end wishlist --}}
+                                   {{-- cart --}}
                                    <div class="header-action-item">
-                                       <a href="{{ route('cart.index') }}"
-                                           class="header-action-btn cartmini-open-btn">
+                                       <a href="{{ route('cart.index') }}" class="header-action-btn cartmini-open-btn">
                                            <svg width="21" height="23" viewBox="0 0 21 23" fill="none"
                                                xmlns="http://www.w3.org/2000/svg">
                                                <path
@@ -154,11 +153,53 @@
                                                    stroke="black" stroke-width="2" stroke-linecap="round"
                                                    stroke-linejoin="round" />
                                            </svg>
-                                           <span class="header-action-badge bg-furniture">{{ count((array) session('cart')) }}</span>
+                                           <span
+                                               class="header-action-badge bg-furniture">{{ count((array) session('cart')) }}</span>
                                        </a>
                                    </div>
+                                   {{-- end cart --}}
+                                   {{-- user --}}
+                                   <div class="header-action-item">
+                                       <ul class="navbar-nav ms-auto ">
+                                           <!-- Authentication Links -->
+                                           @guest
+                                               @if (Route::has('login'))
+                                                   <li class="nav-item">
+                                                       <a class="nav-link"
+                                                           href="{{ route('login') }}">{{ __('Login') }}</a>
+                                                   </li>
+                                               @endif
+                                           @else
+                                               <li class="nav-item dropdown">
+                                                   <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#"
+                                                       role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                       aria-expanded="false" v-pre>
+                                                       {{ Auth::user()->name }}
+                                                   </a>
+
+                                                   <div class="dropdown-menu dropdown-menu-end"
+                                                       aria-labelledby="navbarDropdown">
+                                                       <a class="dropdown-item" href="{{ route('logout') }}"
+                                                           onclick="event.preventDefault();
+                                                                 document.getElementById('logout-form').submit();">
+                                                           {{ __('Logout') }}
+                                                       </a>
+
+                                                       <form id="logout-form" action="{{ route('logout') }}"
+                                                           method="POST" class="d-none">
+                                                           @csrf
+                                                       </form>
+                                                   </div>
+                                               </li>
+                                           @endguest
+                                       </ul>
+                                   </div>
+
+                                   {{-- end user --}}
                                </div>
-                               <div class="header-humbager ml-30">
+
+                               {{-- account --}}
+                               {{-- <div class="header-humbager ml-30">
                                    <a class="sidebar__toggle" href="javascript:void(0)">
                                        <div class="bar-icon-2">
                                            <span></span>
@@ -174,7 +215,9 @@
                                            <span>01</span>
                                        </button>
                                    </div>
-                               </div>
+                               </div> --}}
+
+                               {{-- end account --}}
                            </div>
                        </div>
                    </div>
