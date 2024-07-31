@@ -22,10 +22,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('home');
-    }
+
+    // public function index()
+    // {
+    //     return view('home');
+    // }
+    
     public function showHome(){
         $products = Product::query()->latest('id')->limit(4)->get();
         // dd($data);

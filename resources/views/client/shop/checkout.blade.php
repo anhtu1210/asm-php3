@@ -28,7 +28,7 @@
         <!-- checkout-area start -->
         <section class="checkout-area section-space">
             <div class="container">
-                <form action="{{route('order.save')}}" method="POST">
+                <form action="{{ route('order.save') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-lg-6">
@@ -42,27 +42,28 @@
                                     <div class="col-md-12">
                                         <div class="checkout-form-list">
                                             <label>Name <span class="required">*</span></label>
-                                            <input name="user_name" type="text" placeholder="">
+                                            <input name="user_name" value="{{ $user? $user->name: ''}}" 
+                                            type="text" placeholder="name">
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="checkout-form-list">
                                             <label>Address <span class="required">*</span></label>
-                                            <input name="user_address" type="text" placeholder="Street address">
+                                            <input name="user_address" value="{{ $user? $user->address: ''}}" type="text" placeholder="Street address">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Email Address <span class="required">*</span></label>
-                                            <input name="user_email" type="email" placeholder="email">
+                                            <input name="user_email" value="{{ $user? $user->email: ''}}" type="email" placeholder="email">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
                                             <label>Phone <span class="required">*</span></label>
-                                            <input name="user_phone" type="text" placeholder="sdt">
+                                            <input name="user_phone" value=" {{$user? $user->phone: ''}}" type="text" placeholder="sdt">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -72,44 +73,50 @@
 
                                         </div>
                                     </div>
-                                    {{-- create btn --}}
-                                    <div class="col-md-12">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
-                                            Create a new account
-                                        </button>
+                                    @if (!Auth::user())
+                                        {{-- create btn --}}
+                                        <div class="col-md-12">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">
+                                                Create a new account
+                                            </button>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nhập mk</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div id="cbox_info" class="">
-                                                            <label>Account password <span class="required">*</span></label>
-                                                            <input name="password" type="password" placeholder="password">
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Nhập mk
+                                                            </h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
                                                         </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary"
-                                                            data-bs-dismiss="modal">Save changes</button>
+                                                        <div class="modal-body">
+                                                            <div id="cbox_info" class="">
+                                                                <label>Account password <span
+                                                                        class="required">*</span></label>
+                                                                <input name="password" type="password"
+                                                                    placeholder="password">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary"
+                                                                data-bs-dismiss="modal">Save changes</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+
+
                                         </div>
+                                        {{-- end create btn --}}
+                                    @endif
 
-
-
-                                    </div>
-                                    {{-- end create btn --}}
                                 </div>
 
                             </div>
@@ -131,8 +138,11 @@
                                                 <tr class="cart_item">
                                                     @php
                                                         // dd(session('cart'));
-                                                        $price =$item['price_sale'] == 0? $item['price_regular']: $item['price_sale'];
-                                                                
+                                                        $price =
+                                                            $item['price_sale'] == 0
+                                                                ? $item['price_regular']
+                                                                : $item['price_sale'];
+
                                                         $subtotal = $price * $item['quantity'];
                                                     @endphp
                                                     <td class="product-name">
@@ -149,12 +159,12 @@
 
                                         </tbody>
                                         <tfoot>
-                                            
+
                                             <tr class="shipping">
                                                 <th>Shipping</th>
                                                 <td>
                                                     <ul>
-                                                        
+
                                                         <li>
                                                             <input type="radio">
                                                             <label>Free Shipping:</label>
@@ -164,7 +174,8 @@
                                             </tr>
                                             <tr class="order-total">
                                                 <th>Order Total</th>
-                                                <td><strong><span class="amount">{{number_format($totalAmount)}}VND</span></strong>
+                                                <td><strong><span
+                                                            class="amount">{{ number_format($totalAmount) }}VND</span></strong>
                                                 </td>
                                             </tr>
                                         </tfoot>

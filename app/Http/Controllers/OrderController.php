@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -14,13 +15,20 @@ class OrderController extends Controller
     {
         try {
             DB::transaction(function () {
-                $password = empty(\request('password'))? bcrypt(\request('user_email')): \request('password');
-                $user = User::query()->create([
-                    'name' => \request('user_name'),
-                    'email' => \request('user_email'),
-                    'password' => $password,
-                    'is_active' => empty(\request('password')) ? false : true,
-                ]); 
+                if (!Auth::check()) {
+                    $password = empty(\request('password')) ? bcrypt(\request('user_email')) : \request('password');
+                    $user = User::query()->create([
+                        'name' => \request('user_name'),
+                        'email' => \request('user_email'),
+                        'address' => \request('user_address'),
+                        'phone' => \request('user_phone'),
+                        'password' => $password,
+                        'is_active' => empty(\request('password')) ? false : true,
+                    ]);
+                }else{
+                    $user = Auth::user();
+                }
+
 
                 $totalAmount = 0;
                 $dataItem = [];

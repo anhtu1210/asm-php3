@@ -38,4 +38,4 @@ Route::get('product/shop', [ProductController::class, 'index'])->name('product.i
 Route::get('product/{slug}/detail', [ProductController::class, 'detail'])->name('product.detail');
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [HomeController::class, 'index'])->name('home');

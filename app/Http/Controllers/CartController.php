@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
@@ -92,8 +93,12 @@ class CartController extends Controller
         foreach ($cart as $item) {
             $totalAmount += $item['quantity'] * ($item['price_sale'] ?: $item['price_regular']);
         }
-
-        return view('client.shop.checkout' , compact('totalAmount'));
+        // $user = null;
+        if(Auth::user()){
+            $user = Auth::user();
+            // dd($user->toArray());
+        }
+        return view('client.shop.checkout' , compact('totalAmount', 'user'? 'user' :''));
     }
 
     
