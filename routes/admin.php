@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\Admin\CatalogueController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
     ->as('admin.')
-    //->middleware(['auth', 'isAdmin'])
+    ->middleware(['auth', 'isAdmin'])
     ->group(function () {
 
         Route::get('/', function () {
@@ -28,4 +29,14 @@ Route::prefix('admin')
 
         // Route::resource('categories',   CategoryController::class);
         Route::resource('products',     ProductController::class);
+
+        Route::prefix('orders')
+                ->as('orders.')
+                ->group(function(){
+                    Route::get('/', [OrderController::class, 'index'])->name('index');
+                    Route::patch('{id}/update', [OrderController::class, 'update'])->name('update');
+                    Route::get('{id}/invoice', [OrderController::class, 'invoice'])->name('invoice');
+                });
+
+        
     });
