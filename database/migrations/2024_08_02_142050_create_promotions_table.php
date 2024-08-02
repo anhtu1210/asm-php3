@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('banners', function (Blueprint $table) {
+        Schema::create('promotions', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('image');
-            $table->string('type_status');
-            $table->string('links');
-            $table->string('description');
-            $table->boolean('is_active')->default(1);
+            $table->text('description')->nullable();
+            $table->decimal('discount', 5, 2); // Giảm giá theo phần trăm
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->boolean('is_active')->default('1');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('banners');
+        Schema::dropIfExists('promotions');
     }
 };

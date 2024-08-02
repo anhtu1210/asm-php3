@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CatalogueController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PromotionController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
@@ -40,5 +41,7 @@ Route::prefix('admin')
                 });
         
         Route::resource('banners', BannerController::class);
+
+        Route::resource('promotions', PromotionController::class);
         
     });

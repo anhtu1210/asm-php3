@@ -147,6 +147,29 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarpromotion" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarpromotion">
+                        <i class="ri-layout-3-line"></i>
+                        <span data-key="t-layouts">Promotion</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarpromotion">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                {{-- <a href="#" class="nav-link" --}}
+                                <a href="{{ route('admin.promotions.index') }}" class="nav-link"
+                                   data-key="t-horizontal">Danh sách</a>
+                            </li>
+                            <li class="nav-item">
+                                {{-- <a href="#" class="nav-link" --}}
+                                <a href="{{ route('admin.promotions.create') }}" class="nav-link"
+                                   data-key="t-horizontal">Thêm mới</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
 
             </ul>
         </div>
