@@ -29,6 +29,7 @@ Route::get('cart', [CartController::class, 'list'])->name('cart.index');
 Route::post('cart-add', [CartController::class, 'add'])->name('cart.add');
 Route::patch('cart-update', [CartController::class, 'updateCart'])->name('cart.update');
 Route::delete('cart-delete', [CartController::class, 'deleteCart'])->name('cart.delete');
+Route::post('cart-discount', [CartController::class, 'discount'])->name('cart.discount');
 // checkout
 Route::get('cart-checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 Route::post('order-save', [OrderController::class, 'save'])->name('order.save');

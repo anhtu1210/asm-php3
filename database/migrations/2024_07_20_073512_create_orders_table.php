@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Promotion;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -38,6 +39,7 @@ return new class extends Migration
             $table->string('status_payment')->default(\App\Models\Order::STATUS_PAYMENT_UNPAID);
 
             $table->double('total_price', 15, 2);
+            $table->foreignIdFor(Promotion::class)->constrained();
 
             $table->timestamps();
         });

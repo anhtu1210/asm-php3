@@ -172,10 +172,15 @@
                                                     </ul>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <th>Coupon</th>
+                                                <input name="coupon" type="text" hidden readonly value="{{session('coupon_id')}}">
+                                                <td>{{session('coupon_code')}} | <span class="">{{session('discount')}}%</span></td>
+                                            </tr>
                                             <tr class="order-total">
                                                 <th>Order Total</th>
                                                 <td><strong><span
-                                                            class="amount">{{ number_format($totalAmount) }}VND</span></strong>
+                                                            class="amount">{{ number_format($orderMoney) }}VND</span></strong>
                                                 </td>
                                             </tr>
                                         </tfoot>

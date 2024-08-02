@@ -56,6 +56,7 @@ class OrderController extends Controller
                     'user_phone' => \request('user_phone'),
                     'user_address' => \request('user_address'),
                     'total_price' => $totalAmount,
+                    'promotion_id ' => \request('coupon'),
                 ]);
 
                 foreach ($dataItem as $item) {
@@ -66,6 +67,7 @@ class OrderController extends Controller
             });
 
             session()->forget('cart');
+            session()->forget(['coupon_id', 'discount', 'coupon_code']);
 
             return redirect()->route('home')->with('success', 'Đặt hàng thành công');
         } catch (\Exception $exception) {

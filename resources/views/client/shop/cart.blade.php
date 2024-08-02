@@ -115,16 +115,46 @@
                             </table>
                         </div>
 
+                        @if (session('message'))
+                            <div class="row">
+                                <h3 class="text-danger">{{session('message')}}</h3>
+                            </div>
+                        @endif
                         <div class="row ">
-                            <div class="col-lg-3"></div>
+
+                            <div class="col-lg-3">
+                                <div class="cart-page-total">
+                                    <h2>Add Discount</h2>
+                                    <form action="{{ route('cart.discount') }}" method="post">
+                                        @csrf
+                                        <div class="coupon d-flex align-items-center">
+                                            <input id="coupon_code" class="input-text" name="coupon_code"
+                                                placeholder="Coupon code" type="text">
+                                            <button class="fill-btn" type="submit">
+                                                <span class="fill-btn-inner">
+                                                    <span class="fill-btn-normal">apply coupon</span>
+                                                    <span class="fill-btn-hover">apply coupon</span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                            </div>
                             <div class="col-lg-6 ml-auto ">
                                 <div class="cart-page-total">
                                     <h2>Cart totals</h2>
                                     <ul class="mb-20">
-                                        <li>Subtotal <span id="subtotal-amount">{{ number_format($totalAmount) }}</span></li>
-                                        <li>Total <span id="total-amount">{{ number_format($totalAmount) }}</span></li>
+                                        <li>Subtotal <span id="subtotal-amount">{{ number_format($totalAmount) }}</span>
+                                        </li>
+                                        @if (session('discount'))
+                                            <li>Coupon<span id="coupon">{{ number_format(session('discount')) }}%</span></li>
+                                        @endif
+                                        
+                                        <li>Total <span id="total-amount">{{ number_format($orderMoney) }}</span></li>
                                     </ul>
-                                    <a class="fill-btn" href="{{route('cart.checkout')}}">
+                                    <a class="fill-btn" href="{{ route('cart.checkout') }}">
                                         <span class="fill-btn-inner">
                                             <span class="fill-btn-normal">Proceed to checkout</span>
                                             <span class="fill-btn-hover">Proceed to checkout</span>

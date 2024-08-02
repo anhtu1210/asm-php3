@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -13,6 +14,7 @@ class CartController extends Controller
     public function list()
     {
         $cart = session('cart');
+        $money_coupon = session('discount');
         // dd($cart);
         $tb = "";
 
@@ -25,9 +27,15 @@ class CartController extends Controller
         } else {
             $tb = "<h2 style='color: #B18B5E' class='mb-4  '>Chưa có đơn hàng nào được thêm!</h2>";
         }
+        if ($totalAmount != 0) {
+            $money_tru = $totalAmount * $money_coupon / 100;
+            $orderMoney = $totalAmount - $money_tru;
+        }
+
+
         // dd($totalAmount);
 
-        return view('client.shop.cart', compact('totalAmount', 'tb'));
+        return view('client.shop.cart', compact('totalAmount', 'tb', 'orderMoney'));
     }
 
     public function add()
@@ -88,18 +96,48 @@ class CartController extends Controller
 
     public function checkout()
     {
-        $totalAmount = 0;
         $cart = session('cart');
-        foreach ($cart as $item) {
-            $totalAmount += $item['quantity'] * ($item['price_sale'] ?: $item['price_regular']);
+        $money_coupon = session('discount');
+        // dd($cart);
+        $tb = "";
+
+        $totalAmount = 0;
+        if (isset($cart)) {
+
+            foreach ($cart as $item) {
+                $totalAmount += $item['quantity'] * ($item['price_sale'] ?: $item['price_regular']);
+            }
+        } else {
+            $tb = "<h2 style='color: #B18B5E' class='mb-4  '>Chưa có đơn hàng nào được thêm!</h2>";
+        }
+        if ($totalAmount != 0) {
+            $money_tru = $totalAmount * $money_coupon / 100;
+            $orderMoney = $totalAmount - $money_tru;
         }
         // $user = null;
-        if(Auth::user()){
+        if (Auth::user()) {
             $user = Auth::user();
             // dd($user->toArray());
         }
-        return view('client.shop.checkout' , compact('totalAmount', 'user'? 'user' :''));
+        return view('client.shop.checkout', compact('totalAmount', 'user' ? 'user' : '','orderMoney'));
     }
 
-    
+    public function discount(Request $request)
+    {
+        $name = $request->input('coupon_code');
+        $money = Promotion::query()->where('title', '=', $name)->first();
+        // dd($money);
+        if ($money) {
+            $message = "Áp mã giảm giá thành công";
+            session()->put('coupon_id', $money->id);
+            session()->put('discount', $money->discount);
+            session()->put('coupon_code', $money->title);
+        } else {
+            session()->forget(['coupon_id', 'discount', 'coupon_code']);
+            $message = "Mã giảm giá không tồn tại hoặc hết hạn";
+        }
+        return redirect()->route('cart.index')->with([
+            'message' => $message
+        ]);
+    }
 }
