@@ -2138,11 +2138,11 @@
                 <div class="row g-4">
                     <div class="col-xxl-7 col-xl-6">
                         <div class="furniture-ad__item h-100 bg-image"
-                            data-background="{{ asset('theme/client/assets/imgs/furniture/ad/ad-discount.png') }}">
+                            data-background="{{ \Storage::url($banner->image) }}">
                             <div class="fad-content">
-                                <h6 class="text-white mb-20 text-uppercase">HOT DEAL furniture</h6>
-                                <h2 class="text-capitalize text-white">Furniture limit offer <br> 30% Off</h2>
-                                <a class="border__btn-f mt-35" href="product-details.html">Buy Now<span><i
+                                <h6 class="text-white mb-20 text-uppercase">{{$banner->type_status}}</h6>
+                                <h2 class="text-capitalize text-white">{{$banner->title}}</h2>
+                                <a class="border__btn-f mt-35" href="{{route('product.index')}}">Buy Now<span><i
                                             class="fa-regular fa-angle-right"></i></span></a>
                             </div>
                         </div>

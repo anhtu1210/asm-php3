@@ -107,18 +107,41 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarProduct" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="sidebarProduct">
+                    <a class="nav-link menu-link" href="#sidebarOrder" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarOrder">
                         <i class="ri-layout-3-line"></i>
                         <span data-key="t-layouts">Order</span>
 
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarProduct">
+                    <div class="collapse menu-dropdown" id="sidebarOrder">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 {{-- <a href="#" class="nav-link" --}}
                                 <a href="{{ route('admin.orders.index') }}" class="nav-link"
                                    data-key="t-horizontal">Danh sách</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarbanner" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarbanner">
+                        <i class="ri-layout-3-line"></i>
+                        <span data-key="t-layouts">Banner</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarbanner">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                {{-- <a href="#" class="nav-link" --}}
+                                <a href="{{ route('admin.banners.index') }}" class="nav-link"
+                                   data-key="t-horizontal">Danh sách</a>
+                            </li>
+                            <li class="nav-item">
+                                {{-- <a href="#" class="nav-link" --}}
+                                <a href="{{ route('admin.banners.create') }}" class="nav-link"
+                                   data-key="t-horizontal">Thêm mới</a>
                             </li>
                             
                         </ul>

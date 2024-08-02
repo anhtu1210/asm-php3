@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CatalogueController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
@@ -37,6 +38,7 @@ Route::prefix('admin')
                     Route::patch('{id}/update', [OrderController::class, 'update'])->name('update');
                     Route::get('{id}/invoice', [OrderController::class, 'invoice'])->name('invoice');
                 });
-
+        
+        Route::resource('banners', BannerController::class);
         
     });

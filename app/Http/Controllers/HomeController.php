@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -29,8 +30,9 @@ class HomeController extends Controller
     // }
     
     public function showHome(){
+        $banner = Banner::query()->where('type_status' , 'hot_deal')->where('is_active', 1)->first();
         $products = Product::query()->latest('id')->limit(4)->get();
         // dd($data);
-        return view('client.home', compact('products'));
+        return view('client.home', compact('products', 'banner'));
     }
 }
