@@ -38,6 +38,7 @@ return new class extends Migration
             $table->string('status_order')->default(\App\Models\Order::STATUS_ORDER_PENDING);
             $table->string('status_payment')->default(\App\Models\Order::STATUS_PAYMENT_UNPAID);
 
+            $table->string('payment_type')->default('cod');
             $table->double('total_price', 15, 2);
             $table->foreignIdFor(Promotion::class)->constrained();
 

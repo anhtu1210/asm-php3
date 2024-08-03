@@ -100,26 +100,27 @@ class CartController extends Controller
         $money_coupon = session('discount');
         // dd($cart);
         $tb = "";
-
+        $orderMoney = 0;
         $totalAmount = 0;
         if (isset($cart)) {
 
             foreach ($cart as $item) {
                 $totalAmount += $item['quantity'] * ($item['price_sale'] ?: $item['price_regular']);
             }
+            if ($totalAmount != 0) {
+                $money_tru = $totalAmount * $money_coupon / 100;
+                $orderMoney = $totalAmount - $money_tru;
+            }
         } else {
             $tb = "<h2 style='color: #B18B5E' class='mb-4  '>Chưa có đơn hàng nào được thêm!</h2>";
         }
-        if ($totalAmount != 0) {
-            $money_tru = $totalAmount * $money_coupon / 100;
-            $orderMoney = $totalAmount - $money_tru;
-        }
+
         // $user = null;
         if (Auth::user()) {
             $user = Auth::user();
             // dd($user->toArray());
         }
-        return view('client.shop.checkout', compact('totalAmount', 'user' ? 'user' : '','orderMoney'));
+        return view('client.shop.checkout', compact('totalAmount', 'user' ? 'user' : '', 'orderMoney' ? 'orderMoney' : ''));
     }
 
     public function discount(Request $request)

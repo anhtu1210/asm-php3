@@ -4,6 +4,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Models\ProductColor;
 use Illuminate\Support\Facades\Auth;
@@ -39,4 +40,11 @@ Route::get('product/shop', [ProductController::class, 'index'])->name('product.i
 Route::get('product/{slug}/detail', [ProductController::class, 'detail'])->name('product.detail');
 
 
+//payment
+Route::post('payment', [PaymentController::class, 'payment'])->name('payment.payment');
+Route::get('/vnpay-callback', [PaymentController::class, 'vnpayCallback'])->name('vnpay.callback');
 // Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+// my order
+Route::get('myorder', [OrderController::class, 'showOrder'])->name('myorder.showOrder');

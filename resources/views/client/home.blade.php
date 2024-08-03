@@ -3,7 +3,11 @@
 @section('content')
     <!-- Body main wrapper start -->
     <main>
-
+        @if (session('success'))
+            <div class="row">
+                <h3 class="text-danger">{{ session('success') }}</h3>
+            </div>
+        @endif
         <!-- Banner area start -->
         <section class="banner-4 p-relative furniture-banner-area fix bg-image pb-100"
             data-background="{{ asset('theme/client/assets/imgs/furniture/banner/bg.png') }}" data-bg-color="#F5F1E6">
@@ -407,8 +411,10 @@
                                                         </li>
                                                     </div>
                                                     <div class="product-price">
-                                                        <span class="product-old-price"><del>{{$product->price_regular}}</del></span>
-                                                        <span class="product-new-price">{{$product->price_sale}}VND</span>
+                                                        <span
+                                                            class="product-old-price"><del>{{ $product->price_regular }}</del></span>
+                                                        <span
+                                                            class="product-new-price">{{ $product->price_sale }}VND</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2140,9 +2146,9 @@
                         <div class="furniture-ad__item h-100 bg-image"
                             data-background="{{ \Storage::url($banner->image) }}">
                             <div class="fad-content">
-                                <h6 class="text-white mb-20 text-uppercase">{{$banner->type_status}}</h6>
-                                <h2 class="text-capitalize text-white">{{$banner->title}}</h2>
-                                <a class="border__btn-f mt-35" href="{{route('product.index')}}">Buy Now<span><i
+                                <h6 class="text-white mb-20 text-uppercase">{{ $banner->type_status }}</h6>
+                                <h2 class="text-capitalize text-white">{{ $banner->title }}</h2>
+                                <a class="border__btn-f mt-35" href="{{ route('product.index') }}">Buy Now<span><i
                                             class="fa-regular fa-angle-right"></i></span></a>
                             </div>
                         </div>

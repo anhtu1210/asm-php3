@@ -22,6 +22,7 @@ class Order extends Model
         'paid' => 'Đã thanh toán',
     ];
 
+
     const STATUS_ORDER_PENDING = 'pending';
     const STATUS_ORDER_CONFIRMED = 'confirmed';
     const STATUS_ORDER_PREPARING_GOODS = 'preparing_goods';
@@ -47,6 +48,7 @@ class Order extends Model
         'status_order',
         'status_payment',
         'total_price',
+        'payment_type',
     ];
 
     public function orderItems()
